@@ -131,7 +131,7 @@ export function DataTable<T>({ data, total, pagination, columns }: { data: T[], 
                     colSpan={columns.length}
                     className="h-24 text-center text-xl"
                   >
-                    لا نتائج
+                    لا توجد مُنتجات
                   </TableCell>
                 </TableRow>
               )}

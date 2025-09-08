@@ -23,7 +23,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-
 import { openToaster } from "@/components/ui/sonner"
 import { ProductType } from "../types/types"
 import clsx from "clsx"
@@ -86,10 +85,10 @@ export const columns: ColumnDef<ProductType>[] = [
     },
     {
         accessorKey: "created_at",
-        header: () => <p className="lg:text-lg">تاريخ الإنشاء</p>,
+        header: () => <p className="lg:text-lg">تاريخ الإضافة</p>,
         cell: ({ row }) => (
             <div className="lg:text-lg text-gray-600">
-                {new Date(row.original.createdAt).toLocaleDateString('ar-SA')}
+                {new Date(row.original.added_at).toLocaleDateString('ar-SA')}
             </div>
         ),
     },

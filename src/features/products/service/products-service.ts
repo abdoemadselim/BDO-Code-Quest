@@ -10,12 +10,14 @@ import { apiClient } from "@/lib/api-client";
 export async function getProducts({
   page = 1,
   page_size = 10,
+  search = ""
 }: {
   page: number;
   page_size: number;
+  search: string
 }) {
   const realPage = page > 0 ? page : 1;
-  const endpoint = `/products?page=${realPage - 1}&pageSize=${page_size}`;
+  const endpoint = `/products?page=${realPage - 1}&pageSize=${page_size}&search=${search}`;
 
   return apiClient.get(endpoint, {
     cache: "no-store",

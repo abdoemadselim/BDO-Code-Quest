@@ -1,12 +1,12 @@
-import ProductsTable from "@/features/products/components/products-table"
+import ProductsContent from "@/features/products/components/products-content"
 
-function DashboardPage() {
+function ProductsPage() {
     return (
         <>
             <h1 className="text-3xl pr-6 py-4">المنتجات</h1>
-            <ProductsTable />
+            <ProductsContent />
         </>
     )
 }
 
-export default DashboardPage
+export default ProductsPage

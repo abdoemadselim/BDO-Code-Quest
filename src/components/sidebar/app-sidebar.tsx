@@ -15,6 +15,7 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarSeparator,
 } from "@/components/sidebar/sidebar"
 
 // Menu items.
@@ -47,12 +48,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             asChild
                             className="data-[slot=sidebar-menu-button]:!p-1.5 hover:bg-transparent"
                         >
-                            <Link href="/" className="h-[51px]">
+                            <Link href="/" className="h-[80px]">
                                 <Image
                                     src="/logo.webp"
                                     alt="شعار أداء"
-                                    width="50"
-                                    height="51"
+                                    width="80"
+                                    height="80"
                                     fetchPriority="high"
                                     priority
                                 />
@@ -61,6 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
+            <SidebarSeparator />
             <SidebarContent className="pt-6">
                 <SidebarGroup >
                     <SidebarGroupContent>

@@ -1,0 +1,28 @@
+import Image from "next/image";
+import Link from "next/link";
+
+export default function AuthLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
+    return (
+        <>
+            <div className="min-h-screen bg-zinc-50 px-4 py-16  dark:bg-transparent">
+                <Link href="/">
+                    <Image
+                        src="/logo-lg.webp"
+                        alt="مُختصِر"
+                        width="180"
+                        height="180"
+                        className="mx-auto"
+                        priority
+                    />
+                </Link>
+                <section className="flex justify-center pt-4">
+                    {children}
+                </section>
+            </div>
+        </>
+    );
+}

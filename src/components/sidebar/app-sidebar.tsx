@@ -1,5 +1,10 @@
 'use client'
 
+import { Book, Package, User } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
 import {
     Sidebar,
     SidebarContent,
@@ -11,10 +16,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/sidebar/sidebar"
-import { Book, Package, User } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 // Menu items.
 const items = [
@@ -60,7 +61,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent className="pt-4">
+            <SidebarContent className="pt-6">
                 <SidebarGroup >
                     <SidebarGroupContent>
                         <SidebarMenu>

@@ -1,6 +1,7 @@
-import { DataTable } from "@/components/data-table/data-table";
-import { ProductType } from "../types/types";
 import { ColumnDef } from "@tanstack/react-table";
+
+import { DataTable } from "@/components/data-table/data-table";
+import { ProductType } from "@/features/products/types/types";
 
 type Props = {
     data: { products: ProductType[], total: number },

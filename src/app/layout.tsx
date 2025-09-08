@@ -1,6 +1,7 @@
-import { ClientProvider } from "@/context/client-provider";
-import "./globals.css";
 import { cairo } from "@/fonts/fonts";
+import { ClientProvider } from "@/context/client-provider";
+
+import "./globals.css";
 
 export default function RootLayout({
   children,

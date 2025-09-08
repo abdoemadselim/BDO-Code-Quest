@@ -20,7 +20,6 @@ export async function getProducts({
   const endpoint = `/products?page=${realPage - 1}&pageSize=${page_size}&search=${search}`;
 
   return apiClient.get(endpoint, {
-    cache: "no-store",
     throwOnError: true,
   });
 }

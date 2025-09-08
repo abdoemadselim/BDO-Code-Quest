@@ -1,7 +1,9 @@
+import { Suspense } from "react"
+
 import DataTableSkeleton from "@/components/data-table/data-table-skeleton"
+
 import ProductsContent from "@/features/products/components/products-content"
 import SearchInputSkeleton from "@/features/products/components/search-input-skeleton"
-import { Suspense } from "react"
 
 function ProductsPage() {
     return (

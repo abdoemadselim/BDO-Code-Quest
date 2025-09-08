@@ -1,15 +1,14 @@
 'use client'
 
-import { columns } from "@/features/products/components/data-table-cols-defs"
-import { ProductType } from "@/features/products/types/types";
-import { useGetProducts } from "../hooks/products-query";
 import { useSearchParams } from "next/navigation";
-import DataTableSkeleton from "@/components/data-table/data-table-skeleton";
-import SearchInput from "./search-input";
-import ProductsTable from "./products-table";
-import { Alert, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
-import SearchInputSkeleton from "./search-input-skeleton";
+
+import { Alert, AlertTitle } from "@/components/ui/alert";
+
+import { columns } from "@/features/products/components/data-table-cols-defs"
+import { useGetProducts } from "@/features/products/hooks/products-query";
+import SearchInput from "@/features/products/components/search-input";
+import ProductsTable from "@/features/products/components/products-table";
 
 function ProductsContent() {
     // Get the page, pageSize params from the url
@@ -19,7 +18,7 @@ function ProductsContent() {
     const currentPage = Number(searchParams.get("page")) || 1;
     const pageSize = Number(searchParams.get("pageSize")) || 10;
     const search = searchParams.get("search") || "";
-    const { data, isError, isPending, error } = useGetProducts({ page: currentPage, page_size: pageSize, search: search })
+    const { data, isError, error } = useGetProducts({ page: currentPage, page_size: pageSize, search: search })
 
     // Prepare the pagination state for tanstack table to work properly
     const paginationState = {

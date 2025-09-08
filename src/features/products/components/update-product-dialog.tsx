@@ -1,4 +1,4 @@
-import { ProductType } from "../types/types"
+import { ProductType } from "@/features/products/types/types"
 
 function UpdateProductDialog({ children, currentProduct }: { children: React.ReactNode, currentProduct: ProductType }) {
     return (

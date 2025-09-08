@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import Link from "next/link"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -31,8 +32,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination"
-
-import Link from "next/link"
 
 export function DataTable<T>({ data, total, pagination, columns }: { data: T[], total: number, pagination: { pageIndex: number, pageSize: number }, columns: ColumnDef<T>[] }) {
   const [rowSelection, setRowSelection] = useState({})

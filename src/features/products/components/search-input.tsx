@@ -25,7 +25,7 @@ function SearchInput() {
         // Reset Page to 0 for new results
         params.set("page", "1");
         replace(`${pathname}?${params.toString()}`)
-    }, 300);
+    }, 150);
 
     return (
         <div className="py-4 pl-4 sm:px-0 sm:min-w-[400px] w-[100%]">

@@ -1,6 +1,9 @@
+// Libs
 import { apiClient } from "@/lib/api-client";
-import { ProductType } from "../types/types";
-import { ProductFormType } from "../schema/products.schema";
+
+// Features
+import { ProductType } from "@/features/products/types/types";
+import { ProductFormType } from "@/features/products/schema/products.schema";
 
 export async function createProduct(data: ProductFormType) {
   return apiClient.post("/products", data, {

@@ -1,8 +1,7 @@
 'use client'
 
+// Libs
 import { useState } from "react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import Link from "next/link"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -12,17 +11,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table"
 
-import { Button } from "@/components/ui/button"
-
-import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-
+// Components
 import {
   Table,
   TableBody,
@@ -31,39 +20,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination"
+import DataTablePagination from "@/components/data-table/data-table-pagination"
 
-export function DataTable<T>({ data, total, pagination, columns }: { data: T[], total: number, pagination: { pageIndex: number, pageSize: number }, columns: ColumnDef<T>[] }) {
+type PropsType<T> = {
+  data: T[],
+  total: number,
+  pagination: {
+    pageIndex: number,
+    pageSize: number
+  },
+  columns: ColumnDef<T>[]
+}
+
+export function DataTable<T>({ data, total, pagination, columns }: PropsType<T>) {
   const [rowSelection, setRowSelection] = useState({})
-  const [columnVisibility, setColumnVisibility] =
-    useState<VisibilityState>({})
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  )
-  const searchParams = useSearchParams()
-  const currentPage = Number(searchParams.get("page")) || 1;
-  const pathname = usePathname();
-  const router = useRouter()
-
-  const createPageUrl = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
-  }
-
-  const setPageIndexUrl = (value: string) => {
-    const newPageSize = Number(value)
-
-    // Update the pageSize in table
-    table.setPageSize(newPageSize)
-
-    // Update the URL
-    const params = new URLSearchParams(searchParams)
-    params.set("pageSize", value)
-    params.set("page", "1") // reset to page 1 when page size changes
-
-    router.push(`${pathname}?${params.toString()}`)
-  }
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 
   // Tanstack starts here
   const table = useReactTable({
@@ -138,72 +110,7 @@ export function DataTable<T>({ data, total, pagination, columns }: { data: T[], 
           </Table>
         </div>
       </div>
-      <div className="flex w-full items-center gap-8 lg:w-fit">
-        <div className="hidden items-center gap-2 lg:flex">
-          <Label htmlFor="rows-per-page" className="text-sm font-medium">
-            عدد الصفوف/الصفحة
-          </Label>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={setPageIndexUrl}
-          >
-            <SelectTrigger size="sm" className="w-20" id="rows-per-page">
-              <SelectValue
-                placeholder={table.getState().pagination.pageSize}
-              />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex w-fit items-center justify-center text-sm font-medium ">
-          صفحة  {table.getState().pagination.pageIndex + 1} من أصل
-          <span className="px-1">{table.getPageCount()} </span>
-        </div>
-        <div className="ml-auto flex items-center gap-2 lg:ml-0">
-          <Pagination>
-            <PaginationContent dir="ltr">
-              {table.getCanPreviousPage() &&
-                <PaginationItem>
-                  <Button asChild className="cursor-pointer px-3 text-sm border-gray-300" variant="outline">
-                    <Link href={createPageUrl(1)}>{'<<'}</Link>
-                  </Button>
-                </PaginationItem>
-              }
-              {table.getCanPreviousPage() &&
-                <PaginationItem>
-                  <Button asChild className="cursor-pointer px-3 text-sm border-gray-300" variant="outline">
-                    <Link href={createPageUrl(currentPage - 1)} className="w-full block p-0">{'<'}</Link>
-                  </Button>
-                  <span className="sr-only">الصفحة السابقة</span>
-                </PaginationItem>
-              }
-              {
-                [pagination.pageIndex, pagination.pageIndex + 1, pagination.pageIndex + 2].map((pageIndex) => {
-                  return pageIndex < table.getPageCount() && (
-                    <PaginationItem key={pageIndex}>
-                      <Link href={createPageUrl(pageIndex + 1)} className={`px-3 ${pageIndex == pagination.pageIndex ? 'bg-primary text-white' : 'text-primary border-2'} rounded-sm text-lg cursor-pointer`}>{pageIndex + 1}</Link>
-                    </PaginationItem>
-                  )
-                })
-              }
-              {table.getCanNextPage() &&
-                <PaginationItem>
-                  <Button asChild className="cursor-pointer px-3 text-sm border-gray-300" variant="outline">
-                    <Link href={createPageUrl(currentPage + 1)}>{'>'}</Link>
-                  </Button>
-                  <span className="sr-only">الصفحة التالية</span>
-                </PaginationItem>
-              }
-            </PaginationContent>
-          </Pagination>
-        </div>
-      </div>
+      <DataTablePagination table={table} paginationState={pagination} />
     </div>
   )
 }

@@ -1,9 +1,11 @@
 'use client'
 
-import { Search } from "lucide-react";
+// Libs
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Search } from "lucide-react";
 import { useDebouncedCallback } from 'use-debounce';
 
+// Components
 import { Input } from "@/components/ui/input"
 
 function SearchInput() {
@@ -11,25 +13,27 @@ function SearchInput() {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
+    // Update the url (update the search param to the new search value from the input)
     const handleSearch = useDebouncedCallback((value) => {
-        const params = new URLSearchParams(searchParams);
+        const params = new URLSearchParams();
         if (value) {
             params.set("search", value);
         } else {
             params.delete("search")
         }
 
-        params.set("page", "0");
+        // Reset Page to 0 for new results
+        params.set("page", "1");
         replace(`${pathname}?${params.toString()}`)
     }, 300);
 
     return (
-        <div className="py-4 sm:min-w-[400px] w-[100%] sm:px-0 pl-4">
+        <div className="py-4 pl-4 sm:px-0 sm:min-w-[400px] w-[100%]">
             <div className="relative max-w-sm">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
                 <Input
-                    placeholder="ابحث عن منتج.."
-                    defaultValue={searchParams.get('search')?.toString()}
+                    placeholder="سماعة أبل الذكية"
+                    defaultValue={searchParams.get('search')?.toString()} // To set the current search value in URL when refreshing the page
                     onChange={(event) => handleSearch(event.target.value)}
                     className="pl-10 bg-white"
                 />

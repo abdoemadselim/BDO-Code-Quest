@@ -1,10 +1,12 @@
 'use client'
 
+// Libs
 import { Book, ChevronUp, LogOut, Package, User, User2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+// Components
 import {
     Sidebar,
     SidebarContent,
@@ -17,7 +19,9 @@ import {
     SidebarMenuItem,
     SidebarSeparator,
 } from "@/components/sidebar/sidebar"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+
+// Features
 import { useAuth } from "@/features/auth/context/auth-context"
 
 // Menu items.
@@ -26,16 +30,6 @@ const items = [
         title: "المُنتجات",
         url: "/dashboard/products",
         icon: <Book />,
-    },
-    {
-        title: "العملاء",
-        url: "/dashboard/customers",
-        icon: <User />,
-    },
-    {
-        title: "الطلبات",
-        url: "/dashboard/orders",
-        icon: <Package />,
     },
 ]
 

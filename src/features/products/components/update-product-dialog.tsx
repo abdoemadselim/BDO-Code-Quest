@@ -1,45 +1,46 @@
 'use client'
 
-import { useState, useEffect } from "react"
-import { useForm, Controller } from "react-hook-form"
+// Libs
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-import { Button } from "@/components/ui/button"
+// Components
 import {
     Dialog,
-    DialogClose,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
 import { openToaster } from "@/components/ui/sonner"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+import { Form } from "@/components/ui/form"
 
-import { CategoryType, ProductType } from "@/features/products/types/types"
+// Features
+import { ProductType } from "@/features/products/types/types"
 import { ProductFormType, ProductSchema } from "@/features/products/schema/products.schema"
-
 import { useGetAllProductsStatus, useGetCategories, useUpdateProduct } from '@/features/products/hooks/products-query';
+import ProductForm from "@/features/products/components/product-form"
 
-type UpdateTokenDialogProps = {
+type UpdateProductDialogProps = {
     children: React.ReactNode
     currentProduct: ProductType
 }
 
-export default function UpdateProductDialog({ children, currentProduct }: UpdateTokenDialogProps) {
+export default function UpdateProductDialog({ children, currentProduct }: UpdateProductDialogProps) {
+    const [isOpen, setIsOpen] = useState(false)
+
+    // Define the form state and validation schema with React Hook Form
     const form = useForm<ProductFormType>({
         resolver: zodResolver(ProductSchema),
         defaultValues: currentProduct
     });
 
-    const [isOpen, setIsOpen] = useState(false)
+    // Fetch all available categories, products status for form selects
+    const { data: categoriesData, isError: categories_error } = useGetCategories();
+    const { data: { productsStatus } = {}, isError: products_status_errors } = useGetAllProductsStatus();
+
     const { mutateAsync, isError, isPending, isSuccess } = useUpdateProduct()
 
+    // Form submit handler
     const onSubmit = async (data: ProductType) => {
         await mutateAsync({
             ...data,
@@ -49,194 +50,36 @@ export default function UpdateProductDialog({ children, currentProduct }: Update
         form.reset();
     };
 
-    const { data: categoriesData, isError: categories_error, error } = useGetCategories();
-    const { data: { productsStatus } = {} } = useGetAllProductsStatus();
-
     useEffect(() => {
-        if (isError) {
+        if (isError || categories_error || products_status_errors) {
             openToaster("حدث خطأ غير متوقع في الخادم. يرجى المحاولة لاحقًا.", "error")
         }
 
         if (isSuccess) {
-            openToaster("تم تعديل المُنتج بنجاح.", 'success');
+            openToaster("تم تعديل المنتج بنجاح.", "success")
         }
-    }, [isError, isSuccess])
+    }, [isError, isSuccess, products_status_errors, categories_error])
+
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
+
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>
+
             <DialogContent className="sm:max-w-[425px] w-[100%]">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <DialogHeader className="flex flex-col items-start pt-4 pb-2">
-                            <DialogTitle>إنشاء منتج جديد</DialogTitle>
-                            <DialogDescription>
-                                أدخل تفاصيل المنتج من فضلك
-                            </DialogDescription>
-                        </DialogHeader>
-                        <div className="grid gap-4">
-                            {/* Label */}
-                            <div className="grid gap-3 mt-4">
-                                <div className="grid max-w-[100%] items-center gap-3 mt-4">
-
-                                    <div className="grid w-full gap-2">
-                                        <FormField
-                                            control={form.control}
-                                            name="name"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>اسم المُنتج</FormLabel>
-                                                    <FormControl>
-                                                        <Input type="text" id="name" placeholder="شاشة كمبيوتر" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
-                                    <div className="grid w-full gap-2">
-                                        <FormField
-                                            control={form.control}
-                                            name="category"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>الصنف</FormLabel>
-                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                        <FormControl>
-                                                            <SelectTrigger className="sm:w-[200px] w-full">
-                                                                <SelectValue placeholder="اختر صنف" />
-                                                            </SelectTrigger>
-                                                        </FormControl>
-                                                        <SelectContent>
-                                                            {categoriesData?.categories.map((category: CategoryType) => (
-                                                                <SelectItem key={category.id} value={category.name}>{category.name}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                    <div className="grid w-full gap-2">
-                                        <FormField
-                                            control={form.control}
-                                            name="status"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>الحالة</FormLabel>
-                                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                        <FormControl>
-                                                            <SelectTrigger className="sm:w-[200px] w-full">
-                                                                <SelectValue placeholder="الحالة" />
-                                                            </SelectTrigger>
-                                                        </FormControl>
-                                                        <SelectContent>
-                                                            {productsStatus?.map(({ status }: { status: string }) => (
-                                                                <SelectItem key={status} value={status}>{status}</SelectItem>
-                                                            ))}
-                                                        </SelectContent>
-                                                    </Select>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                    <div className="grid max-w-sm items-center gap-3 mt-4">
-                                        <FormField
-                                            control={form.control}
-                                            name="price"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>السعر (ريال سعودي)</FormLabel>
-                                                    <div className="relative  w-[250px]">
-                                                        <FormControl>
-                                                            <Input
-                                                                type="number"
-                                                                id="price"
-                                                                placeholder="0.00"
-                                                                min="0"
-                                                                step="0.01"
-                                                                className="pr-12"
-                                                                {...field}
-                                                            />
-                                                        </FormControl>
-                                                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                                            <span className="text-gray-500 text-sm">ر.س</span>
-                                                        </div>
-                                                    </div>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
-                                    <div className="grid w-[250px] max-w-sm items-center gap-3 mt-4">
-                                        <FormField
-                                            control={form.control}
-                                            name="stock"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>الكمية المتوفرة</FormLabel>
-                                                    <FormControl>
-                                                        <Input
-                                                            type="number"
-                                                            id="stock"
-                                                            placeholder="0"
-                                                            min="0"
-                                                            step="1"
-                                                            {...field}
-                                                        />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-
-                                    <div className="grid w-full gap-3 mt-4">
-                                        <FormField
-                                            control={form.control}
-                                            name="description"
-                                            render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>وصف المُنتج</FormLabel>
-                                                    <FormControl>
-                                                        <Textarea placeholder="اكتب وصفك للمنتج هنا..." id="description" className="sm:w-[350px] max-w-[100%]"  {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Field */}
-                        </div>
-                        <DialogFooter className="sm:justify-start mt-6">
-                            <DialogClose asChild>
-                                <Button
-                                    type="button"
-                                    variant="outline"
-                                    className="cursor-pointer"
-                                >
-                                    إلغاء
-                                </Button>
-                            </DialogClose>
-                            <Button
-                                type="submit"
-                                className="cursor-pointer"
-                                disabled={form.formState.isSubmitting || isPending}
-                            >
-                                {(form.formState.isSubmitting) ? "جاري التعديل..." : "تعديل المنتج"}
-                            </Button>
-                        </DialogFooter>
-                    </form>
+                    <ProductForm
+                        categories={categoriesData?.categories || []}
+                        form={form}
+                        onSubmit={onSubmit}
+                        productsStatus={productsStatus}
+                        isPending={isPending}
+                    />
                 </Form>
             </DialogContent>
+
         </Dialog >
     );
 }

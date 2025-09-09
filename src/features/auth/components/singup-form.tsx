@@ -1,16 +1,19 @@
 'use client'
 
+// Libs
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { AlertCircleIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from "react-hook-form"
 
+// Components
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertTitle } from '@/components/ui/alert';
 
+// Features
 import { NewUserSchema, type NewUserType } from '@/features/auth/schema/auth.schema'
 import { signup } from '@/features/auth/service/auth'
 import { useAuth } from '@/features/auth/context/auth-context';
@@ -31,7 +34,10 @@ export default function SignUpForm() {
             return setError(error as keyof NewUserType, { message: errors[error].message })
         }
 
+        // If everything is ok, update auth context and redirect
         await checkAuth()
+
+        // Redirects to Home page
         router.replace("/")
     }
 
@@ -54,6 +60,7 @@ export default function SignUpForm() {
                 <hr className="my-4 border-dashed" />
 
                 <div className="space-y-6 ">
+                    {/* Name */}
                     <div className="space-y-2">
                         <Label
                             htmlFor="name"
@@ -76,6 +83,8 @@ export default function SignUpForm() {
                             }
                         </div>
                     </div>
+
+                    {/* Email */}
                     <div className="space-y-2">
                         <Label
                             htmlFor="email"
@@ -99,6 +108,7 @@ export default function SignUpForm() {
                         </div>
                     </div>
 
+                    {/* Password */}
                     <div className="space-y-0.5">
                         <div className="flex items-center justify-between">
                             <Label
@@ -126,6 +136,7 @@ export default function SignUpForm() {
                         </div>
                     </div>
 
+                    {/* Password Confirmation */}
                     <div className="space-y-0.5">
                         <div className="flex items-center justify-between">
                             <Label
@@ -159,7 +170,7 @@ export default function SignUpForm() {
 
             <div className="bg-muted rounded-(--radius) border p-3">
                 <p className="text-accent-foreground text-center text-sm">
-                     لديك حساب بالفعل؟
+                    لديك حساب بالفعل؟
                     <Button
                         asChild
                         variant="link"

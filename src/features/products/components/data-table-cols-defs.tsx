@@ -1,5 +1,6 @@
 'use client'
 
+// Libs
 import {
     Delete,
     MoreVertical,
@@ -8,7 +9,9 @@ import {
 import {
     ColumnDef,
 } from "@tanstack/react-table"
+import clsx from "clsx"
 
+// Components
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -17,10 +20,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { ProductType } from "../types/types"
-import clsx from "clsx"
-import UpdateProductDialog from "./update-product-dialog"
+// Features
+import { ProductType } from "@/features/products/types/types"
+import UpdateProductDialog from "@/features/products/components/update-product-dialog"
 import { DeleteProductDialog } from "@/features/products/components/delete-product-confirmation-dialog"
+import ProductStatusBadge from "@/features/products/components/product-status-badge"
 
 export const columns: ColumnDef<ProductType>[] = [
     {
@@ -46,12 +50,7 @@ export const columns: ColumnDef<ProductType>[] = [
         accessorKey: "status",
         header: () => <p className="lg:text-lg pr-8">الحالة</p>,
         cell: ({ row }) => (
-            <div className="lg:text-md pr-8">
-                <div className={clsx("flex items-center px-2 gap-4 py-[1px] w-fit rounded-xl", row.original.status === "غير متوفر" ? "bg-red-200" : "bg-green-200")}>
-                    <div className={clsx("w-[10px] h-[10px] rounded-full", row.original.status === "غير متوفر" ? "bg-red-500" : "bg-green-500")}></div>
-                    <p className={clsx(row.original.status === "غير متوفر" ? "text-red-800" : "text-green-800")}>{row.original.status}</p>
-                </div>
-            </div>
+            <ProductStatusBadge status={row.original.status} />
         ),
     },
     {

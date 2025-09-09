@@ -1,25 +1,33 @@
 'use client'
 
+// Libs
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { AlertCircleIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from "react-hook-form"
 
+// Components
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Alert, AlertTitle } from '@/components/ui/alert';
 
+// Features
 import { LoginSchema, type LoginType } from '@/features/auth/schema/auth.schema'
 import { login } from '@/features/auth/service/auth'
-import { useAuth } from '../context/auth-context';
+import { useAuth } from '@/features/auth/context/auth-context';
 
 export default function LoginForm() {
     const { checkAuth } = useAuth()
 
     const router = useRouter()
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<LoginType>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        setError
+    } = useForm<LoginType>({
         resolver: zodResolver(LoginSchema)
     })
 
@@ -34,13 +42,15 @@ export default function LoginForm() {
         // If everything is ok, update auth context and redirect
         await checkAuth()
 
-        router.replace("/") // or wherever you want to redirect after login
+        // Redirects to Home page
+        router.replace("/")
     }
 
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="bg-card m-auto h-fit rounded-[calc(var(--radius)+.125rem)] border p-0.5 shadow-md dark:[--color-muted:var(--color-zinc-900)]">
+            className="bg-card m-auto h-fit rounded-[calc(var(--radius)+.125rem)] border p-0.5 shadow-md dark:[--color-muted:var(--color-zinc-900)]"
+        >
             <div className="p-8 pt-2 pb-6 md:w-[500px] w-[350px] sm:w-[450px]">
                 <div>
                     <h1 className="mb-1 mt-4 text-xl text-center text-primary font-semibold">تسجيل الدخول</h1>
@@ -56,6 +66,8 @@ export default function LoginForm() {
                 <hr className="my-4 border-dashed" />
 
                 <div className="space-y-6 ">
+
+                    {/* Email */}
                     <div className="space-y-2">
                         <Label
                             htmlFor="email"
@@ -77,10 +89,13 @@ export default function LoginForm() {
                                 </p>
                             }
                         </div>
+
                     </div>
 
+                    {/* Password */}
                     <div className="space-y-0.5">
                         <div className="flex items-center justify-between">
+
                             <Label
                                 htmlFor="password"
                                 className="text-md">

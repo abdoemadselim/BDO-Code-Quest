@@ -1,11 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+// Libs
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from "@tanstack/react-query"
 
+// Features
 import { CategoryType, ProductType } from "@/features/products/types/types"
 import { createProduct, deleteProduct, getAllProductsStatus, getProducts, getProductsCategories, updateProduct } from "@/features/products/service/products-service"
-import { ProductFormType } from "../schema/products.schema";
+import { ProductFormType } from "@/features/products/schema/products.schema";
 
 export function useGetProducts({ page, page_size, search }: { page: number, page_size: number, search: string }) {
-    return useQuery<{ products: ProductType[], total: number }>({
+    return useSuspenseQuery<{ products: ProductType[], total: number }>({
         queryKey: ["products", { page, page_size, search }],
         queryFn: () => getProducts({ page, page_size, search }),
         staleTime: 5 * 60 * 1000, // 5 minutes,
@@ -53,7 +55,7 @@ export function useCreateProduct() {
 
 export function useGetCategories() {
     return useQuery<{ categories: CategoryType[] }>({
-        queryKey: ["product-categories"],
+        queryKey: ["products-categories"],
         queryFn: () => getProductsCategories(),
         staleTime: 5 * 60 * 1000, // 5 minutes,
         gcTime: 10 * 60 * 1000,

@@ -4,7 +4,7 @@ export type ProductType = {
     category: string,
     price: number,
     stock: number,
-    status: string,
+    status: Status,
     created_at: string,
     description: string
 }
@@ -13,3 +13,5 @@ export type CategoryType = {
     id: number,
     name: string
 }
+
+export type Status = "متاح" | "غير متوفر" | "قريباً"

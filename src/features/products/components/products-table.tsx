@@ -3,6 +3,7 @@ import { AlertCircleIcon } from "lucide-react";
 // Components
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { DataTable } from "@/components/data-table/data-table";
+import DataTableSkeleton from "@/components/data-table/data-table-skeleton";
 
 // Features
 import { ProductType } from "@/features/products/types/types";
@@ -16,12 +17,18 @@ type Props = {
 }
 
 function ProductsTable({ page, pageSize, search }: Props) {
-    const { data, isError, error } = useGetProducts({ page: page, page_size: pageSize, search: search })
+    const { data, isError, error, isPending } = useGetProducts({ page: page, page_size: pageSize, search: search })
 
     // Prepare the pagination state for tanstack table pagination
     const paginationState = {
         pageIndex: page - 1, // Why -1? Tanstack table is zero-indexed (so 1st page is 0 not 1)
         pageSize
+    }
+
+    if (isPending) {
+        return (
+            <DataTableSkeleton />
+        )
     }
 
     return (

@@ -13,9 +13,11 @@ import { Alert, AlertTitle } from '@/components/ui/alert';
 
 import { NewUserSchema, type NewUserType } from '@/features/auth/schema/auth.schema'
 import { signup } from '@/features/auth/service/auth'
+import { useAuth } from '@/features/auth/context/auth-context';
 
 export default function SignUpForm() {
     const router = useRouter()
+    const { checkAuth } = useAuth()
 
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<NewUserType>({
         resolver: zodResolver(NewUserSchema)
@@ -29,7 +31,7 @@ export default function SignUpForm() {
             return setError(error as keyof NewUserType, { message: errors[error].message })
         }
 
-        // If everything is ok, redirect to the verification page
+        await checkAuth()
         router.replace("/")
     }
 

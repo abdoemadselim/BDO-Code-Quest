@@ -5,6 +5,11 @@ export type ProductType = {
     price: number,
     stock: number,
     status: string,
-    added_at: string,
+    created_at: string,
     description: string
+}
+
+export type CategoryType = {
+    id: number,
+    name: string
 }

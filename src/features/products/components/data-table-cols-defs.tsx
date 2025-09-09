@@ -1,12 +1,6 @@
 'use client'
 
-import Link from "next/link"
-import { toast } from "sonner"
-
 import {
-    Badge,
-    ChartArea,
-    Copy,
     Delete,
     MoreVertical,
     Settings,
@@ -23,11 +17,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { openToaster } from "@/components/ui/sonner"
 import { ProductType } from "../types/types"
 import clsx from "clsx"
 import UpdateProductDialog from "./update-product-dialog"
-
+import { DeleteProductDialog } from "@/features/products/components/delete-product-confirmation-dialog"
 
 export const columns: ColumnDef<ProductType>[] = [
     {
@@ -78,7 +71,7 @@ export const columns: ColumnDef<ProductType>[] = [
         cell: ({ row }) => (
             <div className="lg:text-lg pr-8">
                 <p className="lg:text-lg pr-2">
-                    ${row.original.price}
+                    {row.original.price} ر.س
                 </p>
             </div>
         ),
@@ -88,7 +81,7 @@ export const columns: ColumnDef<ProductType>[] = [
         header: () => <p className="lg:text-lg">تاريخ الإضافة</p>,
         cell: ({ row }) => (
             <div className="lg:text-lg text-gray-600">
-                {new Date(row.original.added_at).toLocaleDateString('ar-SA')}
+                {new Date(row.original.created_at).toLocaleDateString('ar-SA')}
             </div>
         ),
     },
@@ -127,10 +120,15 @@ export const columns: ColumnDef<ProductType>[] = [
                             </UpdateProductDialog>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                            <Button variant="ghost" className="w-full text-end h-fit py-1 flex gap-2 text-red-600 justify-end px-2 items-center text-sm hover:text-red-600">
-                                حذف المُنتج
-                                <Delete size={16} />
-                            </Button>
+                            <DeleteProductDialog id={row.original.id} description="هذا الإجراء لا يمكن التراجع عنه. سيتم حذف المنتج نهائياً من المتجر.">
+                                <Button
+                                    variant="ghost"
+                                    className="w-full text-end h-fit py-1 flex gap-2 text-red-600 justify-end px-2 items-center text-sm hover:text-red-600"
+                                >
+                                    حذف المُنتج
+                                    <Delete size={16} />
+                                </Button>
+                            </DeleteProductDialog>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu >

@@ -24,6 +24,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   )
 }
 
+
 const openToaster = (text: string, type: "error" | "success") => {
   const icons = {
     "error": <MessageCircleWarning />,
@@ -41,4 +42,3 @@ const openToaster = (text: string, type: "error" | "success") => {
 }
 
 export { Toaster, openToaster }
-

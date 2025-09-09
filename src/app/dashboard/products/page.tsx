@@ -4,6 +4,7 @@ import DataTableSkeleton from "@/components/data-table/data-table-skeleton"
 
 import ProductsContent from "@/features/products/components/products-content"
 import SearchInputSkeleton from "@/features/products/components/search-input-skeleton"
+import { ProtectedAuthRoute } from "@/features/auth/context/auth-context"
 
 function ProductsPage() {
     return (

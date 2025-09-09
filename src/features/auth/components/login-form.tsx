@@ -2,19 +2,22 @@
 
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
+import { AlertCircleIcon } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema, type LoginType } from '@/features/auth/schema/auth.schema'
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-
-import { login } from '@/features/auth/service/auth'
 import { Alert, AlertTitle } from '@/components/ui/alert';
-import { AlertCircleIcon } from 'lucide-react';
+
+import { LoginSchema, type LoginType } from '@/features/auth/schema/auth.schema'
+import { login } from '@/features/auth/service/auth'
+import { useAuth } from '../context/auth-context';
 
 export default function LoginForm() {
+    const { checkAuth } = useAuth()
+
     const router = useRouter()
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError } = useForm<LoginType>({
         resolver: zodResolver(LoginSchema)
@@ -29,6 +32,8 @@ export default function LoginForm() {
         }
 
         // If everything is ok, update auth context and redirect
+        await checkAuth()
+
         router.replace("/") // or wherever you want to redirect after login
     }
 

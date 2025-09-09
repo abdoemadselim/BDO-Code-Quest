@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams } from "next/navigation";
-import { AlertCircleIcon } from "lucide-react";
+import { AlertCircleIcon, Plus } from "lucide-react";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
@@ -9,6 +9,11 @@ import { columns } from "@/features/products/components/data-table-cols-defs"
 import { useGetProducts } from "@/features/products/hooks/products-query";
 import SearchInput from "@/features/products/components/search-input";
 import ProductsTable from "@/features/products/components/products-table";
+import { Button } from "@/components/ui/button";
+import CreateProductDialog from "./create-product-dialog";
+import { useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { getProductsCategories } from "../service/products-service";
 
 function ProductsContent() {
     // Get the page, pageSize params from the url
@@ -26,6 +31,17 @@ function ProductsContent() {
         pageSize
     }
 
+    console.log(data)
+
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        queryClient.prefetchQuery({
+            queryKey: ["product-categories"],
+            queryFn: getProductsCategories
+        })
+    }, [queryClient])
+
     return (
         <>
             {isError &&
@@ -34,7 +50,13 @@ function ProductsContent() {
                     <AlertTitle>{error.message}</AlertTitle>
                 </Alert>
             }
-            <div className="flex justify-between pr-6">
+            <div className="flex justify-between flex-row-reverse px-6 items-center">
+                <CreateProductDialog>
+                    <Button className="cursor-pointer">
+                        <Plus />
+                        إضافة منتج
+                    </Button>
+                </CreateProductDialog>
                 <SearchInput />
             </div>
             <ProductsTable

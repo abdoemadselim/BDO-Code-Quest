@@ -1,6 +1,6 @@
 'use client'
 
-import { Book, Package, User } from "lucide-react"
+import { Book, ChevronUp, LogOut, Package, User, User2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -17,6 +17,8 @@ import {
     SidebarMenuItem,
     SidebarSeparator,
 } from "@/components/sidebar/sidebar"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { useAuth } from "@/features/auth/context/auth-context"
 
 // Menu items.
 const items = [
@@ -39,6 +41,7 @@ const items = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const pathname = usePathname();
+    const { user, logout } = useAuth()
     return (
         <Sidebar collapsible="offcanvas" {...props}>
             <SidebarHeader >
@@ -82,7 +85,29 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarGroup>
                 <SidebarGroup />
             </SidebarContent>
-            <SidebarFooter />
+            <SidebarFooter>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <DropdownMenu >
+                            <DropdownMenuTrigger asChild>
+                                <SidebarMenuButton className="text-lg">
+                                    <User2 /> {user?.name}
+                                    <ChevronUp className="ml-auto" />
+                                </SidebarMenuButton>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                align="end"
+                                side="top"
+                            >
+                                <DropdownMenuItem className="flex items-center gap-6 cursor-pointer" onClick={() => logout()}>
+                                    <LogOut color="red"/>
+                                    <span className="text-red-500 hover:text-red-500">تسجيل الخروج</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarFooter>
         </Sidebar>
     )
 }

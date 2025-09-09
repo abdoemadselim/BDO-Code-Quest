@@ -14,12 +14,14 @@ export const ProductSchema = z.object({
     .min(1, 'الصنف مطلوب'),
 
   price: z
-    .coerce.number()
+    .coerce
+    .number<number>()
     .min(1, 'السعر يجب أن يكون 1 ريال سعودي على الأقل')
     .max(99999999.99, 'السعر كبير جداً'),
 
   stock: z
-    .coerce.number()
+    .coerce
+    .number<number>()
     .int('الكمية يجب أن تكون رقماً صحيحاً')
     .min(0, 'الكمية يجب أن تكون أكبر من أو تساوي صفر')
     .max(999999, 'الكمية كبيرة جداً'),

@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { cairo } from "@/fonts/fonts";
 import { QueryClientProvider } from "@/context/client-provider";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 import "./globals.css";
 
@@ -29,6 +31,8 @@ export default function RootLayout({
             {children}
           </AuthProvider>
         </QueryClientProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

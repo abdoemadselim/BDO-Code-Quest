@@ -37,7 +37,7 @@ export default function CreateProductDialog({ children }: { children: React.Reac
 
     // Fetch all available categories, products status for form selects
     const { data: categoriesData, isError: categories_error } = useGetCategories();
-    const { data: { productsStatus } = {}, isError: products_status_errors } = useGetAllProductsStatus();
+    const { data:  productsStatusData, isError: products_status_errors } = useGetAllProductsStatus();
 
     const { mutateAsync, isError, isPending, isSuccess } = useCreateProduct()
 
@@ -73,7 +73,7 @@ export default function CreateProductDialog({ children }: { children: React.Reac
                             categories={categoriesData?.categories || []}
                             form={form}
                             onSubmit={onSubmit}
-                            productsStatus={productsStatus}
+                            productsStatus={productsStatusData?.productsStatus || []}
                             isPending={isPending}
                             create
                         />

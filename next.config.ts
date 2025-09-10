@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
       // Proxy UI routes (public stuff)
       {
         source: "/api/:path*",
-        destination: process.env.NODE_ENV === "production" ? "https://products-repo.onrender.com/:path*": "http://localhost:3000/:path*"
+        destination: "https://products-repo.onrender.com/:path*"
       },
     ]
   },

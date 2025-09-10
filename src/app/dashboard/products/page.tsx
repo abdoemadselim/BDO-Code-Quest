@@ -1,13 +1,20 @@
-import ProductsContent from "@/features/products/components/products-content"
-import { ProtectedAuthRoute } from "@/features/auth/context/auth-context"
+import { redirect } from "next/navigation"
 
-function ProductsPage() {
-    // ProtectedAuthRoute --> (directs back to login if user isn't authenticated)
+import ProductsContent from "@/features/products/components/products-content"
+import { getSession } from "@/features/auth/service/auth-session"
+
+async function ProductsPage() {
+    const session = await getSession()
+
+    if (!session) {
+        redirect("/auth/login")
+    }
+
     return (
-        <ProtectedAuthRoute>
+        <>
             <h1 className="text-3xl pr-6 py-4">المنتجات</h1>
             <ProductsContent />
-        </ProtectedAuthRoute>
+        </>
     )
 }
 

@@ -107,7 +107,7 @@ Follow these steps to run the project locally:
 
 1. **Clone the Repository**
     ```bash
-    git clone git@github.com:abdoemadselim/adaa.git
+    git clone git@github.com:abdoemadselim/BDO-Code-Quest.git
     cd adaa
     ```
 

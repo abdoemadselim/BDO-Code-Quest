@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-export const nextConfig: NextConfig = {
+const nextConfig: NextConfig = {
   async rewrites() {
     return [
       // Proxy UI routes (public stuff)
@@ -11,3 +11,6 @@ export const nextConfig: NextConfig = {
     ]
   },
 };
+
+export default nextConfig;
+

@@ -1,11 +1,9 @@
 'use client'
 
 // Libs
-import { useEffect } from "react";
 import { Suspense } from "react"
 import { useSearchParams } from "next/navigation";
 import { Plus } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
 
 // Components
 import { Button } from "@/components/ui/button";
@@ -15,7 +13,6 @@ import DataTableSkeleton from "@/components/data-table/data-table-skeleton";
 import SearchInput from "@/features/products/components/search-input";
 import ProductsTable from "@/features/products/components/products-table";
 import CreateProductDialog from "@/features/products/components/create-product-dialog";
-import { getProductsCategories } from "@/features/products/service/products-service";
 
 function ProductsContent() {
     // Get the page, pageSize, search params from the url (appended to url to offer bookmarking)
@@ -25,15 +22,6 @@ function ProductsContent() {
     const currentPage = Number(searchParams.get("page")) || 1;
     const pageSize = Number(searchParams.get("pageSize")) || 10;
     const search = searchParams.get("search") || "";
-
-    // Prefetch all categories for product create/update forms (the category select options)
-    const queryClient = useQueryClient();
-    useEffect(() => {
-        queryClient.prefetchQuery({
-            queryKey: ["products-categories"],
-            queryFn: getProductsCategories
-        })
-    }, [queryClient])
 
     return (
         <>
@@ -49,7 +37,10 @@ function ProductsContent() {
             </div>
 
             {/* Data table - Suspense to show loading skeleton while the data is loading*/}
-            <Suspense fallback={<DataTableSkeleton />}>
+            <Suspense
+                fallback={<DataTableSkeleton />}
+                key={`${currentPage}-${pageSize}-${search}`}
+            >
                 <ProductsTable
                     page={currentPage}
                     pageSize={pageSize}

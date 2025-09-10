@@ -25,12 +25,6 @@ function ProductsTable({ page, pageSize, search }: Props) {
         pageSize
     }
 
-    if (isPending) {
-        return (
-            <DataTableSkeleton />
-        )
-    }
-
     return (
         <>
             {/* Display errors happen while fetching products */}

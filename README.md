@@ -1,5 +1,6 @@
 ### Table of contents
 - [What is This?](#what-is-this)
+- [Live](#live)
 - [Demo](#demo)
 - [Core Features](#core-features)
 - [Additional Features](#additional-features)
@@ -12,8 +13,11 @@
 ## What is This?
 This project is the implementation of the Code Quests task for the development consulting firm, BOD. It is built using a feature-based architecture.
 
+## Live
+🎥 [Check the website live here](https://adaa-eight.vercel.app/)
+
 ## Demo
-🎥 [Watch the demo video here](https://youtu.be/your-demo-link)
+🎥 [Watch the demo video here](https://mukhtasar.pro/abdelrahman-demo)
 
 ## Core Features
 - **Authentication** 

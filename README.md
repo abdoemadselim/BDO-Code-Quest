@@ -6,8 +6,7 @@
 - [Folder Structure \& Organization](#folder-structure--organization)
 - [Getting Started (run it)](#getting-started-run-it)
 - [API Endpoints](#api-endpoints)
-  - [Endpoints:](#endpoints)
-- [Tech Stack:](#tech-stack)
+- [Tech Stack](#tech-stack)
 ---
 
 ## What is This?
@@ -78,7 +77,7 @@ This project is the implementation of the Code Quests task for the development c
     │   │   ├── service/
     │   │   ├── schema/
     │   │   ├── types/
-    │   ├── auth/            # Products Feature components/hooks/service/validation schemas/etc.
+    │   ├── products/            # Products Feature components/hooks/service/validation schemas/etc.
     │  
     ├── lib/                 # Shared utilities and libraries
     │   └── api-client.ts    # HTTP client 
@@ -121,7 +120,7 @@ Follow these steps to run the project locally:
     ```bash
     pnpm dev
     ```
-    Or build it and preview it in production-like environment
+    Or build and preview it in a production-like environment
     ```bash
     pnpm build
     ```
@@ -135,16 +134,13 @@ I use my own backend to serve the required functionality and data to the interfa
 
 the backend is deployed on a render platform instance: https://products-repo.onrender.com
 
-
-### Endpoints:
-
 You can check the swagger documentation here to see and test all endpoints: https://products-repo.onrender.com/docs
 
 - **Products Resource**
   - GET /products --> Get products pages with support for the following query params
     - ?page=[pageIndex]
     - ?pageSize=[pageSize]
-    - ?search[searchTerm]
+    - ?search=[searchTerm]
   - GET /products/status --> Get all available products status (متاح - غير متوفر - قريباً - ألخ) (used for product creation/update forms)
   - DELETE /products/:product_id --> Delete a product given the id
   - POST /products --> Create a new product
@@ -157,7 +153,7 @@ You can check the swagger documentation here to see and test all endpoints: http
 - **Categories Resource**
   - GET /categories --> Get all available categories (used for product creation/update forms)
   
-## Tech Stack: 
+## Tech Stack
 - React (Next.js framework for file-based routing)
 - TailwindCSS (for faster, composable styling)
 - ShadCN (for Prebuilt, accessible, and customizable UI components out of the box)

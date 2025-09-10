@@ -21,7 +21,7 @@ export default function DashboardLayout({
                 <SiteHeader />
                 {children}
             </SidebarInset>
-            <Toaster />
+            <Toaster position="top-center"/>
         </SidebarProvider>
     );
 }

@@ -159,8 +159,9 @@ You can check the swagger documentation here to see and test all endpoints: http
   
 ## Tech Stack: 
 - React (Next.js framework for file-based routing)
-- TailwindCSS
-- ShadCN (for ready clean with supported accessibility under the hood components)
+- TailwindCSS (for faster, composable styling)
+- ShadCN (for Prebuilt, accessible, and customizable UI components out of the box)
 - React Query (for server-side state handling/caching)
 - Tanstack Table (for providing fully-fledged tables with pagination, searching, etc.)
-- Context API (for auth state handling)
+- Context API (Global state management for authentication)
+- Typescript (for better developer experience)

@@ -29,8 +29,8 @@ This project is the implementation of the Code Quests task for the development c
    - Edit product details (name, stock, status, description, price, etc.)
 
 ## Additional Features
-- **Sentry Integration**
-  - Observability and Real user monitoring, server state tracking with sentry
+- **Vercel performance/analytics Integration**
+  - Observability and Real user monitoring with Vercel
 - **API documentation With Swagger**: https://products-repo.onrender.com/docs
 
 

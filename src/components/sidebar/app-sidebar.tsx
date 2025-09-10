@@ -1,10 +1,10 @@
 'use client'
 
 // Libs
-import { Book, ChevronUp, LogOut, Package, User, User2 } from "lucide-react"
+import { Book, ChevronUp, LogOut,  User2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { redirect, usePathname } from "next/navigation"
 
 // Components
 import {
@@ -93,8 +93,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 align="end"
                                 side="top"
                             >
-                                <DropdownMenuItem className="flex items-center gap-6 cursor-pointer" onClick={() => logout()}>
-                                    <LogOut color="red"/>
+                                <DropdownMenuItem className="flex items-center gap-6 cursor-pointer" onClick={() => {
+                                    logout()
+                                    redirect("/auth/login")
+                                }}>
+                                    <LogOut color="red" />
                                     <span className="text-red-500 hover:text-red-500">تسجيل الخروج</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>

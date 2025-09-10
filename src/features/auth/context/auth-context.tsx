@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { logout as logoutService } from '@/features/auth/service/auth'
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 type User = {
     id: string

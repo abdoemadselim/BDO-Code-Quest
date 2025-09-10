@@ -119,8 +119,11 @@ Follow these steps to run the project locally:
    ```bash
    npm install
    ```
+3. **Rename env-example file to .env**
 
-3.  **Start The project in dev mode**
+      note: This is surly not valid for real projects :)
+   
+5.  **Start The project in dev mode**
     ```bash
     pnpm dev
     ```

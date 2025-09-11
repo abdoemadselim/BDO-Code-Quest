@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
-
+ 
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+ 
+/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   async rewrites() {
     return [
@@ -12,5 +17,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
-
+module.exports = withBundleAnalyzer(nextConfig)

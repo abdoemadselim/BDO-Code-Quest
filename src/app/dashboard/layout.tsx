@@ -1,7 +1,9 @@
+import dynamic from "next/dynamic";
+const Toaster = dynamic(() => import("@/components/ui/sonner").then((mod) => mod.Toaster))
+
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/sidebar/sidebar";
 import { SiteHeader } from "@/components/sidebar/sidebar-trigger";
-import { Toaster } from "@/components/ui/sonner";
 
 export default function DashboardLayout({
     children,
@@ -21,7 +23,7 @@ export default function DashboardLayout({
                 <SiteHeader />
                 {children}
             </SidebarInset>
-            <Toaster position="top-center"/>
+            <Toaster position="top-center" />
         </SidebarProvider>
     );
 }

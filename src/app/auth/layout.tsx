@@ -16,7 +16,7 @@ export default function AuthLayout({
                         width="180"
                         height="180"
                         className="mx-auto"
-                        priority
+                        fetchPriority="high"
                     />
                 </Link>
                 <section className="flex justify-center pt-4">

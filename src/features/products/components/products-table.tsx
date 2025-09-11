@@ -8,7 +8,7 @@ import { DataTable } from "@/components/data-table/data-table";
 
 // Features
 import { ProductType } from "@/features/products/types/types";
-import { columns } from "@/features/products/components/data-table-cols-defs"
+import { useOptimizedColumns } from "@/features/products/components/data-table-cols-defs"
 import { useGetProducts } from "@/features/products/hooks/products-query";
 
 type Props = {
@@ -19,6 +19,7 @@ type Props = {
 
 function ProductsTable({ page, pageSize, search }: Props) {
     const { data, isError, error } = useGetProducts({ page: page, page_size: pageSize, search: search })
+    const columns = useOptimizedColumns()
 
     // Prepare the pagination state for tanstack table pagination
     const paginationState = {

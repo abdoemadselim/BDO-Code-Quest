@@ -2,9 +2,10 @@
 
 // Libs
 import dynamic from "next/dynamic";
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { useSearchParams } from "next/navigation";
 import { Plus } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 // Components
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ const ProductsTable = dynamic(() => import("@/features/products/components/produ
     ssr: false
 });
 import CreateProductDialog from "@/features/products/components/create-product-dialog";
+import { getProducts } from "@/features/products/service/products-service";
 
 function ProductsContent() {
     // Get the page, pageSize, search params from the url (appended to url to offer bookmarking)
@@ -26,6 +28,16 @@ function ProductsContent() {
     const currentPage = Number(searchParams.get("page")) || 1;
     const pageSize = Number(searchParams.get("pageSize")) || 10;
     const search = searchParams.get("search");
+    const queryClient = useQueryClient();
+    useEffect(() => {
+        queryClient.prefetchQuery({
+            queryKey: ["products", { page: currentPage, page_size: pageSize, search }],
+            queryFn: () => getProducts({ page: currentPage, page_size: pageSize, search }),
+            staleTime: 5 * 60 * 1000, // 5 minutes,
+            gcTime: 10 * 60 * 1000,
+            retry: 2,
+        })
+    }, [queryClient, currentPage, pageSize, search])
 
     return (
         <>

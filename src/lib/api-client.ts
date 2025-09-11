@@ -15,6 +15,7 @@ export interface FetchOptions extends Omit<RequestInit, 'body'> {
     includeCredentials?: boolean;
     throwOnError?: boolean;
     cache?: RequestCache;
+    baseUrl?: string,
 }
 
 class ApiClient {
@@ -82,13 +83,15 @@ class ApiClient {
     ): Promise<T | ApiError> {
         const {
             body,
+            baseUrl,
             includeCredentials = false,
             throwOnError = false,
             headers = {},
             ...restOptions
         } = options;
 
-        const url = `${this.baseUrl}${endpoint}`;
+        let endBaseUrl = baseUrl == undefined ? this.baseUrl : baseUrl;
+        const url = `${endBaseUrl}${endpoint}`;
 
         const fetchOptions: RequestInit = {
             headers: {

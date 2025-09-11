@@ -6,7 +6,7 @@ import { CategoryType, ProductType } from "@/features/products/types/types"
 import { createProduct, deleteProduct, getAllProductsStatus, getProducts, getProductsCategories, updateProduct } from "@/features/products/service/products-service"
 import { ProductFormType } from "@/features/products/schema/products.schema";
 
-export function useGetProducts({ page, page_size, search }: { page: number, page_size: number, search: string }) {
+export function useGetProducts({ page, page_size, search }: { page: number, page_size: number, search: string | null }) {
     return useSuspenseQuery<{ products: ProductType[], total: number }>({
         queryKey: ["products", { page, page_size, search }],
         queryFn: () => getProducts({ page, page_size, search }),

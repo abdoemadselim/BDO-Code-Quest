@@ -19,10 +19,19 @@ export async function getProducts({
 }: {
   page: number;
   page_size: number;
-  search: string
+  search: string | null
 }) {
   const realPage = page > 0 ? page : 1;
-  const endpoint = `/products?page=${realPage - 1}&pageSize=${page_size}&search=${search}`;
+  const params = new URLSearchParams({
+    page: String(realPage - 1),
+    pageSize: String(page_size),
+  });
+
+  if (search) {
+    params.set("search", search);
+  }
+
+  const endpoint = `/products?${params.toString()}`;
 
   return apiClient.get(endpoint, {
     throwOnError: true,

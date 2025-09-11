@@ -121,7 +121,7 @@ Follow these steps to run the project locally:
    ```
 3. **Rename env-example file to .env**
 
-      note: This is surly not valid for real projects :)
+      note: This is surely not valid for real projects :)
    
 5.  **Start The project in dev mode**
     ```bash

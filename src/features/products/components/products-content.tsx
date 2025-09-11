@@ -28,6 +28,8 @@ function ProductsContent() {
     const currentPage = Number(searchParams.get("page")) || 1;
     const pageSize = Number(searchParams.get("pageSize")) || 10;
     const search = searchParams.get("search");
+
+    // Prefetch data for data table component
     const queryClient = useQueryClient();
     useEffect(() => {
         queryClient.prefetchQuery({

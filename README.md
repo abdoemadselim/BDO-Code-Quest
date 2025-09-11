@@ -123,7 +123,7 @@ Follow these steps to run the project locally:
 
       note: This is surely not valid for real projects :)
    
-5.  **Start The project in dev mode**
+4.  **Start The project in dev mode**
     ```bash
     pnpm dev
     ```
@@ -134,6 +134,10 @@ Follow these steps to run the project locally:
     then
     ```bash
     pnpm start
+    ```
+5. **Copy this URL into your browser**
+    ```bash
+    http://localhost:3002
     ```
 
 ## API Endpoints

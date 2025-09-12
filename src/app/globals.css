@@ -44,6 +44,7 @@
   --color-color-3: var(--color-3);
   --color-color-2: var(--color-2);
   --color-color-1: var(--color-1);
+  --breakpoint-3xl: 115.625rem;
 }
 
 :root {
